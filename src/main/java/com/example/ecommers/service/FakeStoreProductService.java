@@ -115,7 +115,7 @@ public class FakeStoreProductService implements ProductService {
 	    @Override
 	    public GenericProductDto updateProductById(Long id,GenericProductDto genericProductDto) {
 
-	        return convertToGenericProductDto(fakeStoreClient.updateProductById(id,genericProductDto));
+	        return null;
 
 	    }
 	

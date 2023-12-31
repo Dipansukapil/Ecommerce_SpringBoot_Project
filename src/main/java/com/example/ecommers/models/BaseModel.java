@@ -22,4 +22,14 @@ public class BaseModel {
 	    @Column(name = "id", columnDefinition = "binary(16)", nullable = false, updatable = false)
 	    private UUID id;
 
+		public UUID getId() {
+			return id;
+		}
+
+		public void setId(UUID id) {
+			this.id = id;
+		}
+	    
+	    
+
 }

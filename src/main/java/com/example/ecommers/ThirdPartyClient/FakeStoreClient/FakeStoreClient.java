@@ -83,29 +83,7 @@ public class FakeStoreClient {
 	    }
 
 
-	    public FakeStoreProductDto updateProductById(Long id,GenericProductDto genericProductDto) {
-
-
-//	        RestTemplate restTemplate = restTemplateBuilder.build();
-//	        RequestCallback requestCallback = restTemplate.acceptHeaderRequestCallback(FakeStoreProductDto.class);
-//	        ResponseExtractor<ResponseEntity<FakeStoreProductDto>> responseExtractor =
-//	                restTemplate.responseEntityExtractor(FakeStoreProductDto.class);
-//	        restTemplate.execute(specificProductUrl, HttpMethod.DELETE, requestCallback, responseExtractor, id);
-	//
-//	        ResponseEntity<FakeStoreProductDto> responseEntity =
-//	                restTemplate.postForEntity(specificProductUrl,genericProductDto,FakeStoreProductDto.class);
-	//
-//	        return responseEntity.getBody();
-
-
-//
-//	        RestTemplate restTemplate = restTemplateBuilder.build();
-//	        ResponseEntity<FakeStoreProductDto> responseEntity =
-//	        restTemplate.exchange(genericProductUrl,HttpMethod.PUT,new HttpEntity<>(genericProductDto),FakeStoreProductDto.class);
-//
-//
-//
-//	        return responseEntity.getBody();
+	    public FakeStoreProductDto updateProductById(GenericProductDto genericProductDto) {
 	    	
 	    	
 	    	return null;
