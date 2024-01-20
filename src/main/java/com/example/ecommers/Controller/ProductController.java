@@ -2,12 +2,14 @@ package com.example.ecommers.Controller;
 
 import java.util.List;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,8 +28,10 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public GenericProductDto getProductById(@PathVariable("id") Long id) throws ProductNotFoundException {
-        return productService.getProductById(id);
+    public GenericProductDto getProductById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authToken,
+    		@PathVariable("id") Long id) throws ProductNotFoundException {
+    	System.out.print(authToken);
+        return productService.getProductById(authToken,id);
     }
 
     @GetMapping
