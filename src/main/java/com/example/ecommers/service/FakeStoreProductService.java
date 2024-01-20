@@ -3,20 +3,26 @@ package com.example.ecommers.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import java.util.Optional;
 import org.springframework.stereotype.Service;
 
 import com.example.ecommers.ThirdPartyClient.FakeStoreClient.FakeStoreClient;
 import com.example.ecommers.dtos.FakeStoreProductDto;
 import com.example.ecommers.dtos.GenericProductDto;
 import com.example.ecommers.exception.ProductNotFoundException;
+import com.example.ecommers.security.JWTObject;
+import com.example.ecommers.security.TokenValidater;
 
 @Service
 public class FakeStoreProductService implements ProductService {
 	
 	 private FakeStoreClient fakeStoreClient;
+	 private TokenValidater tokenValidater;
 
-	    FakeStoreProductService(FakeStoreClient fakeStoreAdapter){
+	    FakeStoreProductService(FakeStoreClient fakeStoreAdapter,
+	    		TokenValidater tokenValidater){
 	        this.fakeStoreClient = fakeStoreAdapter;
+	        this.tokenValidater = tokenValidater;
 	    }
 	    //AutoWiring
 //	    FakeStoreProductService(RestTemplateBuilder restTemplateBuilder){
@@ -37,7 +43,7 @@ public class FakeStoreProductService implements ProductService {
 	    }
 
 	    @Override
-	    public GenericProductDto getProductById(Long id) throws ProductNotFoundException {
+	    public GenericProductDto getProductById(String authToken,Long id) throws ProductNotFoundException {
 	        // Integrate FakeStore API.
 	        // RestTemplate.
 //	        RestTemplate restTemplate = restTemplateBuilder.build();
@@ -52,6 +58,15 @@ public class FakeStoreProductService implements ProductService {
 	//
 //	        // Convert FakeStoreDto to GenericStoreDto before returning
 //	        return convertToGenericProductDto(responseEntity.getBody());
+	    	
+	    	Optional<JWTObject> jwtObjectOptional = tokenValidater.validateToken(authToken);
+	    	
+	    	if(jwtObjectOptional.isEmpty()) {
+	    		return null;
+	    	}
+	    	
+	    	JWTObject jwtObject = jwtObjectOptional.get();
+	        Long userId = jwtObject.getUserId();
 
 	        return convertToGenericProductDto(fakeStoreClient.getProductById(id));
 	    }

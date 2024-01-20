@@ -7,10 +7,11 @@ import com.example.ecommers.exception.ProductNotFoundException;
 
 public interface ProductService {
 	
-	GenericProductDto getProductById(Long id) throws ProductNotFoundException;
+	
     List<GenericProductDto> getAllProducts();
     GenericProductDto deleteProductById(Long id);
     GenericProductDto createProduct(GenericProductDto genericProductDto);
     GenericProductDto updateProductById(Long id,GenericProductDto genericProductDto);
+	GenericProductDto getProductById(String authToken, Long id) throws ProductNotFoundException;
 
 }

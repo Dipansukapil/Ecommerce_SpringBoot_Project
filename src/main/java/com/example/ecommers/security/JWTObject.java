@@ -8,7 +8,7 @@ import com.userservice.models.Role;
 public class JWTObject {
 	
 	private String email;
-	private String userId;
+	private Long userId;
 	private Date expiryAt;
 	private Date createdAt;
 	private List<Role> roles;
@@ -19,10 +19,10 @@ public class JWTObject {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getUserId() {
+	public Long getUserId() {
 		return userId;
 	}
-	public void setUserId(String userId) {
+	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
 	public Date getExpiryAt() {
