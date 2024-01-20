@@ -54,18 +54,14 @@
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.loginPage</groupId>
-			<artifactId>loginPage</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
+
+
 
 		<dependency>
-			<groupId>com.database</groupId>
-			<artifactId>School</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<groupId>com.userservice</groupId>
+			<artifactId>UserServices</artifactId>
+			<version>0.0.2</version>
 		</dependency>
-		 
 	</dependencies>
 
 	<build>
