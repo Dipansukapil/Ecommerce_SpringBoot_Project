@@ -1,5 +1,7 @@
 package com.example.ecommers.models;
 
+import com.example.ecommers.dtos.GenericProductDto;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
@@ -62,6 +64,16 @@ public class Product extends BaseModel {
 	}
 	public void setInventoryCount(int inventoryCount) {
 		this.inventoryCount = inventoryCount;
+	}
+	
+	public GenericProductDto from(Product product) {
+		GenericProductDto genericProductDto = new GenericProductDto();
+		genericProductDto.setTitle(product.getTitle());
+		genericProductDto.setDescription(product.getDescription());
+		genericProductDto.setImage(product.getImage());
+		
+		
+		return genericProductDto;
 	}
     
     

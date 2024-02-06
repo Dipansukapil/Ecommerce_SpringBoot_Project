@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.springframework.data.domain.Example;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -26,4 +27,6 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
 
     //@Query(value = "select * from product where id = 1", nativeQuery = true)
     List<Product> findAllByPrice_ValueBetween(Integer x, Integer y);
+    
+    List<Product> findAllByTitleContainingIgnoreCase(String title, Pageable pageable);
 }

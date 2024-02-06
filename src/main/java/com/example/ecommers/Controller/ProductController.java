@@ -30,7 +30,7 @@ public class ProductController {
     @GetMapping("/{id}")
     public GenericProductDto getProductById(@RequestHeader(HttpHeaders.AUTHORIZATION) String authToken,
     		@PathVariable("id") Long id) throws ProductNotFoundException {
-    	System.out.print(authToken);
+    	//System.out.print(authToken);
         return productService.getProductById(authToken,id);
     }
 

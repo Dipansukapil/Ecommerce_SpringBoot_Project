@@ -12,6 +12,7 @@ public class GenericProductDto {
     private String description;
     private String image;
     private String category;
+    private int inventoryCount;
     
     
 	public String getTitle() {
@@ -43,6 +44,12 @@ public class GenericProductDto {
 	}
 	public void setCategory(String category) {
 		this.category = category;
+	}
+	public int getInventoryCount() {
+		return inventoryCount;
+	}
+	public void setInventoryCount(int inventoryCount) {
+		this.inventoryCount = inventoryCount;
 	}
     
     
