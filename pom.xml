@@ -94,6 +94,11 @@
         	<artifactId>UserServices</artifactId>
         	<version>0.0.2</version>
         </dependency>
+          <dependency>
+           <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <version>2.7.2</version>
+        </dependency>
     </dependencies>
 
     <build>

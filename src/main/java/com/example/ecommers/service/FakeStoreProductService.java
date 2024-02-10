@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import java.util.Optional;
+
+import org.springframework.context.annotation.Primary;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 
 import com.example.ecommers.ThirdPartyClient.FakeStoreClient.FakeStoreClient;
@@ -13,16 +16,19 @@ import com.example.ecommers.exception.ProductNotFoundException;
 import com.example.ecommers.security.JWTObject;
 import com.example.ecommers.security.TokenValidater;
 
+@Primary
 @Service
 public class FakeStoreProductService implements ProductService {
 	
-	 private FakeStoreClient fakeStoreClient;
+	 private FakeStoreClient fakeStoreAdapter;
 	 private TokenValidater tokenValidater;
+	 private RedisTemplate<String,FakeStoreProductDto> redisTemplate;
 
 	    FakeStoreProductService(FakeStoreClient fakeStoreAdapter,
-	    		TokenValidater tokenValidater){
-	        this.fakeStoreClient = fakeStoreAdapter;
+	    		TokenValidater tokenValidater,RedisTemplate redisTemplate){
+	        this.fakeStoreAdapter = fakeStoreAdapter;
 	        this.tokenValidater = tokenValidater;
+	        this.redisTemplate = redisTemplate;
 	    }
 	    //AutoWiring
 //	    FakeStoreProductService(RestTemplateBuilder restTemplateBuilder){
@@ -60,15 +66,22 @@ public class FakeStoreProductService implements ProductService {
 //	        return convertToGenericProductDto(responseEntity.getBody());
 	    	
 	    	Optional<JWTObject> jwtObjectOptional = tokenValidater.validateToken(authToken);
+//	    	
+//	    	if(jwtObjectOptional.isEmpty()) {
+//	    		return null;
+//	    	}
+//	    	
+//	    	JWTObject jwtObject = jwtObjectOptional.get();
+//	        Long userId = jwtObject.getUserId();
 	    	
-	    	if(jwtObjectOptional.isEmpty()) {
-	    		return null;
+	    	FakeStoreProductDto fakeStoreProductDto = (FakeStoreProductDto)redisTemplate.opsForHash().get("PRODUCTS", id);
+	    	if(fakeStoreProductDto != null) {
+	    		return convertToGenericProductDto(fakeStoreProductDto);
 	    	}
 	    	
-	    	JWTObject jwtObject = jwtObjectOptional.get();
-	        Long userId = jwtObject.getUserId();
-
-	        return convertToGenericProductDto(fakeStoreClient.getProductById(id));
+	    	fakeStoreProductDto = fakeStoreAdapter.getProductById(id);
+	        redisTemplate.opsForHash().put("PRODUCTS", id, fakeStoreProductDto);
+	        return convertToGenericProductDto(fakeStoreProductDto);
 	    }
 
 	    @Override
@@ -88,7 +101,7 @@ public class FakeStoreProductService implements ProductService {
 //	                return result;
 
 	        List<FakeStoreProductDto> fakeStoreProductDtos =
-	                fakeStoreClient.getAllProducts();
+	        		fakeStoreAdapter.getAllProducts();
 
 	        List<GenericProductDto> genericProductDtos = new ArrayList<>();
 	        for(FakeStoreProductDto fakeStoreProductDto : fakeStoreProductDtos){
@@ -111,7 +124,7 @@ public class FakeStoreProductService implements ProductService {
 	//
 //	        return convertToGenericProductDto(responseEntity.getBody());
 
-	        return convertToGenericProductDto(fakeStoreClient.deleteProductById(id));
+	        return convertToGenericProductDto(fakeStoreAdapter.deleteProductById(id));
 
 	    }
 
@@ -124,7 +137,7 @@ public class FakeStoreProductService implements ProductService {
 	//
 //	        return convertToGenericProductDto(responseEntity.getBody());
 
-	        return convertToGenericProductDto(fakeStoreClient.createProduct(genericProductDto));
+	        return convertToGenericProductDto(fakeStoreAdapter.createProduct(genericProductDto));
 	    }
 
 	    @Override

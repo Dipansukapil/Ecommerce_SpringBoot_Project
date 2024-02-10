@@ -1,7 +1,8 @@
 package com.example.ecommers.dtos;
 
+import java.io.Serializable;
 
-public class FakeStoreProductDto {
+public class FakeStoreProductDto implements Serializable {
 	
 	private String title;
     private int price;
